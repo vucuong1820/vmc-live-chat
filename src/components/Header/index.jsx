@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Col, Drawer, Menu, Row } from "antd";
 import { Link } from "react-router-dom";
@@ -14,16 +14,14 @@ import {
 import Title from "antd/lib/typography/Title";
 import "./Header.less";
 import Text from "antd/lib/typography/Text";
-
 Header.propTypes = {};
 
 function Header(props) {
   const [showSidebar, setShowSidebar] = useState(false);
-
   return (
     <Row className="header">
       <Col lg={8} md={8} sm={24} xs={24}>
-        <Row >
+        <Row style={{display: 'flex'}}>
           <Col lg={0} md={0} sm={4} xs={4} className="menu-sidebar">
             <Button style={{border: 'none'}} type="ghost" onClick={() => setShowSidebar(!showSidebar)}>
               <MenuOutlined style={{color: 'white'}}/>
@@ -47,7 +45,7 @@ function Header(props) {
             </Drawer>
           </Col>
 
-          <Col lg={24} md={24} sm={20} xs={20}>
+          <Col lg={24} md={24} sm={20} xs={20} className="logo-group">
             <Link to="/home" className="logo">
               <MessageOutlined className="logo__icon" />
               <Text className="logo__title">

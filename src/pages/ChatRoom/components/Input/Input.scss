@@ -1,0 +1,27 @@
+.input-box {
+    display: flex;;
+    background: white;
+    width: 100%;
+    box-shadow: 0px -8px 18px -1px rgba(0,0,0,0.08);
+    padding: 12px 8px;
+    height: 62px;
+    justify-content: flex-start;
+    align-items: center;
+
+    &__icon {
+        font-size: 20px;
+        padding: 0 8px;
+    }
+
+    &__send {
+        font-size: 20px;
+        padding: 0 12px;
+        line-height: 100%;
+    }
+}
+
+.ant-input.input-box__data {
+    border-radius: 12px;
+    margin-left: 16px;
+    margin-right: 8px;
+}
