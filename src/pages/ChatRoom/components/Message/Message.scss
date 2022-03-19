@@ -1,0 +1,30 @@
+.message-item {
+    padding: 16px 14px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    div &__body {
+        display: flex;
+        flex-flow: column;
+    }
+    
+    &__name {
+        font-weight: bold;
+    }
+
+    &__info {
+        text-align: justify ;
+        padding: 8px 16px 8px 8px;
+        background-color: #e4e6eb;
+        border-radius: 12px;
+        margin-top: 8px;
+    }
+
+    &__time {
+        margin-left: 16px;
+        font-style: italic;
+    }
+
+
+}
