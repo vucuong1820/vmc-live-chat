@@ -11,10 +11,10 @@ Message.propTypes = {
 function Message(props) {
     return (
         <Row className="message-item">
-            <Col span={1} className="message-item__img">
+            <Col lg={1} md={2} sm={3} xs={3} className="message-item__img">
                 <Avatar src="https://pickaface.net/gallery/avatar/unr_test_180612_1021_b05p.png"/>
             </Col>
-            <Col span={23} className="message-item__body" >
+            <Col lg={23} md={22} sm={21} xs={21} className="message-item__body" >
                 <div>
                     <Text className="message-item__name">Tên</Text>
                     <Text className="message-item__time">Today at 8:09 PM</Text>

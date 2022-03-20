@@ -10,12 +10,12 @@ Content.propTypes = {
 
 function Content(props) { 
     return (
-        <div class="content">
+        <div className="content">
             <Row className="content-header">  
-                <Col span={2} className="content-header__img">
+                <Col lg={2} md={2} sm={6} xs={6} className="content-header__img">
                     <Avatar size="large" src="https://cf.shopee.vn/file/02fe6a694c2f1f1c7e1b10da0ab76c18"/>
                 </Col>
-                <Col className="content-header__title" span={22}>Title</Col>
+                <Col lg={22} md={22} sm={18} xs={18}  className="content-header__title">Title</Col>
             </Row>
             <Row className="content-message-list"> 
                 {
