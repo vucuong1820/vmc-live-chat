@@ -1,23 +1,33 @@
-import React, { useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
-import { Button, Col, Drawer, Menu, Row } from "antd";
-import { Link } from "react-router-dom";
 import {
   FacebookFilled,
   GoogleCircleFilled,
-  
   InstagramFilled,
-  
+  LogoutOutlined,
   MenuOutlined,
-  MessageOutlined,
+  MessageOutlined
 } from "@ant-design/icons";
-import Title from "antd/lib/typography/Title";
-import "./Header.less";
+import { Button, Col, Drawer, Menu, Row } from "antd";
 import Text from "antd/lib/typography/Text";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { signOut } from 'firebase/auth'
+import { auth } from '../../firebase/config'
+import "./Header.less";
 Header.propTypes = {};
 
 function Header(props) {
   const [showSidebar, setShowSidebar] = useState(false);
+  const navigate = useNavigate()
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      navigate("/home");
+      setShowSidebar(false);
+    } catch (error) {
+      console.log('Failed to logout:',error)
+    }
+
+  }
   return (
     <Row className="header">
       <Col lg={8} md={8} sm={24} xs={24}>
@@ -40,7 +50,7 @@ function Header(props) {
                 <Menu.Item  key="1" icon={<FacebookFilled style={{fontSize: '20px'}}/>}>Facebook</Menu.Item>
                 <Menu.Item  key="2" icon={<GoogleCircleFilled style={{fontSize: '20px'}}/>}>Google</Menu.Item>
                 <Menu.Item  key="3" icon={<InstagramFilled style={{fontSize: '20px'}}/>}>Instagram</Menu.Item>
-
+                <Menu.Item onClick={handleSignOut}  key="4" icon={<LogoutOutlined style={{fontSize: '20px'}}/>}>Đăng xuất</Menu.Item>
               </Menu>
             </Drawer>
           </Col>
@@ -57,10 +67,11 @@ function Header(props) {
       </Col>
 
       <Col lg={16} md={16} sm={0} xs={0} className="menu">
-        <Menu mode="horizontal" className="menu--default">
-          <Menu.Item>Facebook</Menu.Item>
-          <Menu.Item>Google</Menu.Item>
-          <Menu.Item>Gmail</Menu.Item>
+        <Menu selectable={false} mode="horizontal" className="menu--default">
+          <Menu.Item key="1">Facebook</Menu.Item>
+          <Menu.Item key="2">Google</Menu.Item>
+          <Menu.Item key="3">Gmail</Menu.Item>
+          <Menu.Item key="4" onClick={handleSignOut}>Đăng xuất</Menu.Item>
         </Menu>
       </Col>
     </Row>

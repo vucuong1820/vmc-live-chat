@@ -1,8 +1,8 @@
 import { initializeApp } from 'firebase/app'
 import * as firebase from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics';
-import { getFirestore } from 'firebase/firestore/lite'
-import { getAuth } from 'firebase/auth'
+import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore'
+import { connectAuthEmulator, getAuth } from 'firebase/auth'
 
 
 const firebaseConfig = {
@@ -20,6 +20,11 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 const auth = getAuth()
-const db = getFirestore()
+connectAuthEmulator(auth, "http://localhost:9099")
 
-export {auth, db};
+const db = getFirestore()
+connectFirestoreEmulator(db,"localhost","4000" )
+
+
+
+export { auth, db };
