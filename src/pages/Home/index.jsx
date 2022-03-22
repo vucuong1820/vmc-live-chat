@@ -5,6 +5,7 @@ import { auth, db } from "../../firebase/config";
 import { signInWithPopup, onAuthStateChanged, GoogleAuthProvider } from 'firebase/auth';
 import "./Home.scss";
 import { collection, doc, setDoc, addDoc, where, query, getDoc  } from 'firebase/firestore'
+import { addDocumentWithId } from '../../firebase/service';
 Home.propTypes = {
     
 };
@@ -17,13 +18,14 @@ function Home(props) {
     const handleGoogleLogin = async () => {
         try {
             const {user} = await signInWithPopup(auth, googleProvider)
-            const userSnap = await getDoc(doc(db, 'users',user?.providerData[0].uid))
+            const userSnap = await getDoc(doc(db, 'users',user?.uid))
             if(userSnap.exists()){
              console.log('user existed')   
             }else {
-                setDoc(doc(db, "users", user?.providerData[0].uid), {
-                    ...user?.providerData[0]
-                });
+                addDocumentWithId("users",user?.uid, {
+                    ...user?.providerData[0],
+                    uid: user?.uid
+                })
             }
             
         } catch (error) {

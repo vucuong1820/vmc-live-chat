@@ -23,7 +23,7 @@ const auth = getAuth()
 connectAuthEmulator(auth, "http://localhost:9099")
 
 const db = getFirestore()
-connectFirestoreEmulator(db,"localhost","4000" )
+connectFirestoreEmulator(db,"localhost","5000" )
 
 
 
