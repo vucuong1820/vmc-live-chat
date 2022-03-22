@@ -1,25 +1,24 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Avatar, Menu } from "antd";
-import { UserOutlined } from "@ant-design/icons";
-import { Typography } from "antd";
+import { Avatar, Menu, Typography } from "antd";
+import React, { useContext } from "react";
+import { AppContext } from "../../../../Context/AppProvider";
 import "./RoomList.scss";
 
 RoomList.propTypes = {};
 
 function RoomList(props) {
+  const { rooms } = useContext(AppContext)
   const { Text } = Typography;
-  const array = [1, 2, 3, 4];
+
   return (
     <Menu style={{ border: "none" }} className="mess__list">
-      {array.map((item, index) => (
+      {rooms.map((item, index) => (
         <Menu.Item key={index} className="mess__item">
           <Avatar
             size="large"
             className="mess__img"
-            src="https://cdn.tgdd.vn/Files/2021/12/10/1403714/loimess1_1280x720-800-resize.jpg"
+            src={item?.photoURL || "https://cdn.tgdd.vn/Files/2021/12/10/1403714/loimess1_1280x720-800-resize.jpg"}
           />
-          <Text className="mess__text">Tin nhắn </Text>
+          <Text className="mess__text">{item.description} </Text>
         </Menu.Item>
       ))}
     </Menu>

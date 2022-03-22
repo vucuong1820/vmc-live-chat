@@ -1,42 +1,31 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Avatar } from "antd";
-import { UserOutlined } from "@ant-design/icons";
-import { Typography, Space, Row, Col, Button } from "antd";
-import { UsergroupAddOutlined } from "@ant-design/icons";
+import { UsergroupAddOutlined, UserOutlined } from "@ant-design/icons";
+import { Avatar, Col, Row, Typography } from "antd";
+import React, { useContext } from "react";
 import "./UserInfo.scss";
-import { collection, onSnapshot, getFirestore } from "firebase/firestore";
-import { db } from "../../../../firebase/config";
+import { AuthContext } from "../../../../Context/AuthProvider";
+import { AppContext } from "../../../../Context/AppProvider";
 
 const { Text } = Typography;
 UserInfo.propTypes = {};
 
 function UserInfo(props) {
-  React.useEffect(() => {
-
-    const unsubscribe = onSnapshot(collection(db, "users"), (snapshot) => {
-      const data = snapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id
-      }))
-
-    });
-
-    
-    
-  }, [])
+  const { user } = useContext(AuthContext)
+  const { setIsShowAddModal } = useContext(AppContext)
+  const handleClick = () => {
+    setIsShowAddModal(true)
+  };
   return (
       <Row className="user">
         <Col lg={6} md={8} sm={16} xs={24}>
-          <Avatar size="large" icon={<UserOutlined />} className="user__avt" />
+          <Avatar size="large" src={user?.photoURL || ''} className="user__avt" />
         </Col>
 
         <Col lg={14} md={10} sm={0} xs={0}>
-          <Text className="user__name">Username</Text>
+          <Text className="user__name">{user.displayName}</Text>
         </Col>
 
         <Col lg={4} md={6} sm={8} xs={24}>
-          <UsergroupAddOutlined className="user__add-icon" />
+          <UsergroupAddOutlined onClick={handleClick} className="user__add-icon" />
         </Col>
       </Row>
   );
