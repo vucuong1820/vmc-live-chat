@@ -1,4 +1,4 @@
-import { UsergroupAddOutlined, UserOutlined } from "@ant-design/icons";
+import { PlusCircleOutlined } from "@ant-design/icons";
 import { Avatar, Col, Row, Typography } from "antd";
 import React, { useContext } from "react";
 import "./UserInfo.scss";
@@ -25,7 +25,7 @@ function UserInfo(props) {
         </Col>
 
         <Col lg={4} md={6} sm={8} xs={24}>
-          <UsergroupAddOutlined onClick={handleClick} className="user__add-icon" />
+          <PlusCircleOutlined onClick={handleClick} className="user__add-icon" />
         </Col>
       </Row>
   );

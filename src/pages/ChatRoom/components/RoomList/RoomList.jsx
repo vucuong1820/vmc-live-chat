@@ -6,13 +6,12 @@ import "./RoomList.scss";
 RoomList.propTypes = {};
 
 function RoomList(props) {
-  const { rooms } = useContext(AppContext)
+  const { rooms, setSelectedRoomId } = useContext(AppContext)
   const { Text } = Typography;
-
   return (
     <Menu style={{ border: "none" }} className="mess__list">
       {rooms.map((item, index) => (
-        <Menu.Item key={index} className="mess__item">
+        <Menu.Item key={item.id} onClick={() => setSelectedRoomId(item.id)} className="mess__item">
           <Avatar
             size="large"
             className="mess__img"

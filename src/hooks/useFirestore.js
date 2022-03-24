@@ -24,11 +24,11 @@ function useFirestore(collectionName, condition) {
 
 
     const unsubscribe = onSnapshot(collectionFiltered, (snapshot) => {
-      const documents = snapshot.docs.map((doc) => ({
+      let newDocuments = snapshot.docs.map((doc) => ({
         ...doc.data(),
-        id: doc.id,
+        id: doc.id
       }));
-      setDocuments(documents)
+      setDocuments(newDocuments)
     });
 
     //clean up
