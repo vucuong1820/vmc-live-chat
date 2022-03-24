@@ -17,10 +17,9 @@ function AddNewRoomModal(props) {
       const values = await form.validateFields();
       const formData = {
         ...values,
-        photoURL: values.photoURL[0].thumbUrl,
+        photoURL: values?.photoURL?.[0]?.thumbUrl || '',
         members: [user.uid],
       };
-      console.log(formData)
       addDocumentWithAutoId("rooms", formData);
       setIsShowAddModal(false);
       form.resetFields();

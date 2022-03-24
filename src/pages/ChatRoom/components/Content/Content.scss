@@ -1,5 +1,4 @@
 .content {
-    height: calc(100vh - 110px);
     overflow-x: hidden;
 }
 .content-header {
@@ -8,7 +7,6 @@
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    position: fixed;
     background: white;
     z-index: 2;
     width: 100%;
@@ -16,11 +14,6 @@
     &__img {
         padding-left: 16px;
     }
-
-    &__title {
-        margin-right: auto;
-    }
-
     box-shadow: 0 1px 3.125rem 0 rgba(0,0,0,0.2);
 
 }
@@ -28,8 +21,25 @@
 .ant-row.content-message-list {
     display: flex;
     flex-flow: column;
-    margin-top: 76px;
+    justify-content: flex-end;
+    padding-top:16px;
     height: calc(100vh - 110px - 62px - 76px);
     overflow: scroll;
     overflow-x: hidden;
+}
+span.content-header__add-members {
+    font-size:28px;
+    margin-right: 16px;
+}
+
+div.ant-col.content-header__members {
+    display:flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 20px;
+}
+
+div.ant-col.content-header__title {
+    display: flex;
+    flex-flow: column;
 }
