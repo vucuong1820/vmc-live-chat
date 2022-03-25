@@ -1,5 +1,5 @@
 import { PlusCircleOutlined } from "@ant-design/icons";
-import { Avatar, Col, Row, Typography } from "antd";
+import { Avatar, Col, Row, Skeleton, Typography } from "antd";
 import React, { useContext } from "react";
 import "./UserInfo.scss";
 import { AuthContext } from "../../../../Context/AuthProvider";
@@ -10,9 +10,9 @@ UserInfo.propTypes = {};
 
 function UserInfo(props) {
   const { user } = useContext(AuthContext)
-  const { setIsShowAddModal } = useContext(AppContext)
+  const { setIsShowAddGroupModal } = useContext(AppContext)
   const handleClick = () => {
-    setIsShowAddModal(true)
+    setIsShowAddGroupModal(true)
   };
   return (
       <Row className="user">
@@ -21,7 +21,12 @@ function UserInfo(props) {
         </Col>
 
         <Col lg={14} md={10} sm={0} xs={0}>
-          <Text className="user__name">{user.displayName}</Text>
+          {user.displayName ? (
+            <Text className="user__name">{user.displayName}</Text>
+          ): (
+            <Skeleton active="checked" paragraph={{ rows: 0}}/>
+          )}
+          
         </Col>
 
         <Col lg={4} md={6} sm={8} xs={24}>

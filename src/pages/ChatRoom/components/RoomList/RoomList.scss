@@ -9,9 +9,18 @@
         }
 
     }
+}
 
-    
-
+.skeleton {
+    display: flex;
+    align-items: center;
+    padding: 4px 12px 20px 12px;
+    &__img {
+        margin-right: 16px;
+    }
+    &__text {
+        width: 100%;
+    }
 }
 
 

@@ -5,7 +5,8 @@ import { AuthContext } from './AuthProvider'
 export const AppContext = React.createContext()
 
 function AppProvider({children}) {
-    const [isShowAddModal, setIsShowAddModal] = useState(false)
+    const [isShowAddGroupModal, setIsShowAddGroupModal] = useState(false);
+    const [isShowAddMemberModal, setIsShowAddMemberModal] = useState(false)
     const [selectedRoomId, setSelectedRoomId] = useState('')
     const { user } = useContext(AuthContext);
   /**
@@ -28,8 +29,19 @@ function AppProvider({children}) {
   const rooms = useFirestore("rooms", roomsCondition);
   const selectedRoom = React.useMemo(() => rooms.find(room => room.id === selectedRoomId) || {}, [rooms, selectedRoomId]);
 
+  const membersCondition = React.useMemo(() => {
+    return {
+      fieldName: 'uid',
+      operator: 'in',
+      compareValue: selectedRoom.members
+    }
+  },[selectedRoom.members])
+
+  const membersInSelectedRoom = useFirestore('users',membersCondition)
+  console.log(selectedRoom.length)
+
     return (
-        <AppContext.Provider value={{ rooms, isShowAddModal, setIsShowAddModal, selectedRoomId, setSelectedRoomId, selectedRoom }}>
+        <AppContext.Provider value={{ rooms,isShowAddMemberModal,setIsShowAddMemberModal, isShowAddGroupModal, membersInSelectedRoom, setIsShowAddGroupModal, selectedRoomId, setSelectedRoomId, selectedRoom }}>
             {children}
         </AppContext.Provider>
     );

@@ -1,14 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types";
-import "./ChatRoom.scss";
-import { Col, Layout, Row, Space } from "antd";
-import Sidebar from "./Sidebar";
-import Content from "./components/Content/Content";
+import { Col, Row } from "antd";
+import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import AddNewRoomModal from "../../components/Modal/AddNewRoomModal";
-
+import { AuthContext } from "../../Context/AuthProvider";
+import "./ChatRoom.scss";
+import Content from "./components/Content/Content";
+import Sidebar from "./Sidebar";
 ChatRoom.propTypes = {};
 
 function ChatRoom(props) {
+  const { user } = useContext(AuthContext)
+  const navigate = useNavigate()
+  useEffect(() => {
+      if(!user){
+        navigate("/home")
+      }
+  },[user,navigate])
   return (
     <div className="chat-room">
       <Row>
