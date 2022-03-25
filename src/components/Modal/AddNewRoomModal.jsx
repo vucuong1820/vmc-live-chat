@@ -1,15 +1,13 @@
+import { PlusOutlined } from "@ant-design/icons";
+import { Form, Input, Modal, Upload } from "antd";
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
-import { Modal, Upload } from "antd";
 import { AppContext } from "../../Context/AppProvider";
 import { AuthContext } from "../../Context/AuthProvider";
-import { Form, Input, Button, Checkbox } from "antd";
 import { addDocumentWithAutoId } from "../../firebase/service";
-import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 AddNewRoomModal.propTypes = {};
 
 function AddNewRoomModal(props) {
-  const { isShowAddModal, setIsShowAddModal } = useContext(AppContext);
+  const { isShowAddGroupModal, setIsShowAddGroupModal } = useContext(AppContext);
   const [form] = Form.useForm();
   const { user } = useContext(AuthContext);
   const handleOk = async () => {
@@ -21,15 +19,15 @@ function AddNewRoomModal(props) {
         members: [user.uid],
       };
       addDocumentWithAutoId("rooms", formData);
-      setIsShowAddModal(false);
+      setIsShowAddGroupModal(false);
       form.resetFields();
     } catch (error) {
-      console.log("Failed to submit form:", error);
+      console.log("Failed to add new group chat:", error);
     }
   };
 
   const handleCancel = () => {
-    setIsShowAddModal(false);
+    setIsShowAddGroupModal(false);
   };
   const normFile = (e) => {
     if (Array.isArray(e)) {
@@ -41,7 +39,7 @@ function AddNewRoomModal(props) {
   return (
     <Modal
       title="Thêm nhóm chat mới"
-      visible={isShowAddModal}
+      visible={isShowAddGroupModal}
       onOk={handleOk}
       onCancel={handleCancel}
       centered
