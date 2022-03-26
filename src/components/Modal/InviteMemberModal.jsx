@@ -1,9 +1,8 @@
 import { Avatar, Form, Modal, Select } from "antd";
 import { doc, updateDoc } from "firebase/firestore";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { AppContext } from "../../Context/AppProvider";
 import { db } from "../../firebase/config";
-import { getUserList } from "../../firebase/service";
 AddNewRoomModal.propTypes = {};
 
 function AddNewRoomModal(props) {
@@ -12,25 +11,16 @@ function AddNewRoomModal(props) {
     isShowAddMemberModal,
     setIsShowAddMemberModal,
     selectedRoomId,
-    membersInSelectedRoom,
-    selectedRoom
+    selectedRoom,
+    memberNotInSelectedRoom
   } = useContext(AppContext);
   const [form] = Form.useForm();
-  const [userList, setUserList ] = useState([])
   const [value, setValue] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  useEffect(() => {
-    (async() => {
-
-      // add new member except members in this room
-      const currentUserList = await getUserList(membersInSelectedRoom)
-      setUserList(currentUserList)
-    })()
-  },[membersInSelectedRoom])
+  const userList = [...memberNotInSelectedRoom]
   const handleOk = async () => {
     try {
       setIsLoading(true)
-      console.log(userList)
       const selectedRoomRef = doc(db, "rooms", selectedRoomId)
       await updateDoc(selectedRoomRef,{
         members: [...selectedRoom.members, ...value]
@@ -50,7 +40,6 @@ function AddNewRoomModal(props) {
 
   };
   function handleChange(memberAddedId) {
-    console.log(memberAddedId);
     setValue(memberAddedId)
   }
 
