@@ -15,13 +15,21 @@ function useFirestore(collectionName, condition) {
   React.useEffect(() => {
 
     if (!condition.compareValue || condition.compareValue.length === 0) return;
-
-    const collectionFiltered = query(
-      collection(db, collectionName),
-      orderBy("createdAt"),
-      where(condition.fieldName, condition.operator, condition.compareValue),
-    );
-
+    
+    let collectionFiltered;
+    if(condition.operator === "not-in"){
+       collectionFiltered = query(
+        collection(db, collectionName),
+        where(condition.fieldName, condition.operator, condition.compareValue),
+      );
+    }else{
+      collectionFiltered = query(
+        collection(db, collectionName),
+        where(condition.fieldName, condition.operator, condition.compareValue),
+        orderBy("createdAt"),
+      );  
+    }
+     
 
     const unsubscribe = onSnapshot(collectionFiltered, (snapshot) => {
       let newDocuments = snapshot.docs.map((doc) => ({

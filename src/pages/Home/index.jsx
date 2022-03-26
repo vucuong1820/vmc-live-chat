@@ -1,11 +1,10 @@
 import { Button, Modal } from 'antd';
-import * as firebase from 'firebase/app'
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 import React from 'react';
 import { auth, db } from "../../firebase/config";
-import { signInWithPopup, onAuthStateChanged, GoogleAuthProvider } from 'firebase/auth';
-import "./Home.scss";
-import { collection, doc, setDoc, addDoc, where, query, getDoc  } from 'firebase/firestore'
 import { addDocumentWithId } from '../../firebase/service';
+import "./Home.scss";
 Home.propTypes = {
     
 };
@@ -20,7 +19,7 @@ function Home(props) {
             const {user} = await signInWithPopup(auth, googleProvider)
             const userSnap = await getDoc(doc(db, 'users',user?.uid))
             if(userSnap.exists()){
-             console.log('user existed')   
+                // do something..
             }else {
                 addDocumentWithId("users",user?.uid, {
                     ...user?.providerData[0],

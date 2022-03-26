@@ -36,12 +36,19 @@ function AppProvider({children}) {
       compareValue: selectedRoom.members
     }
   },[selectedRoom.members])
-
   const membersInSelectedRoom = useFirestore('users',membersCondition)
-  console.log(selectedRoom.length)
+
+  const membersNotInCondition = React.useMemo(() => {
+    return {
+      fieldName: 'uid',
+      operator: 'not-in',
+      compareValue: selectedRoom.members
+    }
+  },[selectedRoom.members])
+  const memberNotInSelectedRoom = useFirestore('users',membersNotInCondition)
 
     return (
-        <AppContext.Provider value={{ rooms,isShowAddMemberModal,setIsShowAddMemberModal, isShowAddGroupModal, membersInSelectedRoom, setIsShowAddGroupModal, selectedRoomId, setSelectedRoomId, selectedRoom }}>
+        <AppContext.Provider value={{memberNotInSelectedRoom, rooms,isShowAddMemberModal,setIsShowAddMemberModal, isShowAddGroupModal, membersInSelectedRoom, setIsShowAddGroupModal, selectedRoomId, setSelectedRoomId, selectedRoom }}>
             {children}
         </AppContext.Provider>
     );

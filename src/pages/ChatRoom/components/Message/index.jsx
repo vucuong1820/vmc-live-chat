@@ -3,23 +3,37 @@ import PropTypes from 'prop-types';
 import { Avatar, Col, Row } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import "./Message.scss"
+import { formatRelative } from 'date-fns/esm';
 
 Message.propTypes = {
     
 };
 
-function Message(props) {
+function Message({ message }) {
+    const { displayName, photoURL, text, createdAt } = message
+    function formatDate(seconds) {
+        let formattedDate = '';
+      
+        if (seconds) {
+          formattedDate = formatRelative(new Date(seconds * 1000), new Date());
+      
+          formattedDate =
+            formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+        }
+      
+        return formattedDate;
+      }
     return (
         <Row className="message-item">
             <Col lg={1} md={2} sm={3} xs={3} className="message-item__img">
-                <Avatar src="https://pickaface.net/gallery/avatar/unr_test_180612_1021_b05p.png"/>
+                <Avatar src={photoURL}>{photoURL ? '' : displayName?.[0]?.toUpperCase()}</Avatar>
             </Col>
             <Col lg={23} md={22} sm={21} xs={21} className="message-item__body" >
                 <div>
-                    <Text className="message-item__name">Tên</Text>
-                    <Text className="message-item__time">Today at 8:09 PM</Text>
+                    <Text className="message-item__name">{displayName}</Text>
+                    <Text className="message-item__time">{formatDate(createdAt?.seconds)}</Text>
                 </div>
-                <Text className="message-item__info">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
+                <Text className="message-item__info">{text}</Text>
             </Col>
         </Row>
     );

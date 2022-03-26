@@ -7,7 +7,6 @@ RoomList.propTypes = {};
 
 function RoomList(props) {
   const { rooms, setSelectedRoomId } = useContext(AppContext)
-  console.log({rooms})
   const { Text } = Typography;
   return (
     <Menu style={{ border: "none" }} className="mess__list">
