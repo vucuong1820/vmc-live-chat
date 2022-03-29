@@ -21,7 +21,7 @@
 .ant-row.content-message-list {
     display: flex;
     flex-flow: column;
-    justify-content: flex-end;
+    justify-content: flex-start;
     padding-top:16px;
     height: calc(100vh - 110px - 62px - 76px);
     overflow: scroll;
@@ -43,20 +43,19 @@ div.ant-col.content-header__title {
     display: flex;
     flex-flow: column;
 }
-.input-box {
+.form-msg {
     display: flex;;
     background: white;
     width: 100%;
     box-shadow: 0px -8px 18px -1px rgba(0,0,0,0.08);
     padding: 12px 8px;
-    height: 62px;
+    min-height: 62px;
     justify-content: flex-start;
     align-items: center;
-
-    &__icon {
-        font-size: 20px;
-        padding: 0 8px;
+    div.ant-form-item {
+        margin-bottom: 0;
     }
+   
 
     &__send {
         font-size: 20px;
@@ -67,10 +66,36 @@ div.ant-col.content-header__title {
             cursor: pointer;
         }
     }
+    &__input {
+        width: 100%;
+        margin-right: 16px;
+    }
 }
 
-.ant-input.input-box__data {
+.ant-input.input-text {
     border-radius: 12px;
-    margin-left: 16px;
+    // margin-left: 16px;
     margin-right: 8px;
+}
+
+.ant-form-item.form-msg__picture{
+    margin-left: 8px;
+    &:hover{
+        opacity: 0.7;
+        cursor: pointer;
+    }
+}
+.ant-form-item.form-msg__input{
+    margin-right: 16px;
+}
+.ant-form.form-msg{
+    padding: 0 8px;
+}
+span.form-msg__icon {
+    color: #3677a5;
+    font-size: 20px;
+    padding: 0 8px;
+}
+.ant-form-item.form-msg__emoji {
+    position: relative;
 }
