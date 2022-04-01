@@ -1,7 +1,7 @@
 import {
   PictureFilled,
   SmileFilled,
-  UsergroupAddOutlined,
+  UsergroupAddOutlined
 } from "@ant-design/icons";
 import {
   Alert,
@@ -12,32 +12,36 @@ import {
   Row,
   Tooltip,
   Typography,
-  Upload,
+  Upload
 } from "antd";
+import Picker from "emoji-picker-react";
+import {
+  getDownloadURL,
+  ref, uploadBytesResumable
+} from "firebase/storage";
 import React, { useContext, useState } from "react";
 import useResizeObserver from "use-resize-observer";
 import InviteMemberModal from "../../../../components/Modal/InviteMemberModal";
 import { AppContext } from "../../../../Context/AppProvider";
 import { AuthContext } from "../../../../Context/AuthProvider";
+import { storage } from "../../../../firebase/config";
 import { addDocumentWithAutoId } from "../../../../firebase/service";
 import useFirestore from "../../../../hooks/useFirestore";
 import Message from "../Message";
 import "./Content.scss";
-import Picker from "emoji-picker-react";
 Content.propTypes = {};
 
 function Content(props) {
   const [inputHeight, setInputHeight] = useState(0);
   const [form] = Form.useForm();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const { ref } = useResizeObserver({
+  const { ref: inputRef } = useResizeObserver({
     onResize: ({ width, height }) => {
       setInputHeight(height);
     },
   });
   const { Text } = Typography;
   const [inputValue, setInputValue] = useState("123");
-  const [formData, setFormData] = useState({});
   const { user } = useContext(AuthContext);
   const { selectedRoom, membersInSelectedRoom, setIsShowAddMemberModal } =
     useContext(AppContext);
@@ -50,6 +54,7 @@ function Content(props) {
     [selectedRoom.id]
   );
   const messageList = useFirestore("messages", condition);
+
   if (Object.keys(selectedRoom).length === 0) {
     return (
       <Alert
@@ -61,44 +66,73 @@ function Content(props) {
       />
     );
   }
-  const handleSubmit = () => {
-    if(form.getFieldValue("text") || (form.getFieldValue("picture") && form.getFieldValue("picture").length > 0)){
+  const handleSubmit = async () => {
+    const imgFileList = form.getFieldValue("picture");
+    if (Array.isArray(imgFileList) && imgFileList.length > 0) {
+      imgFileList.forEach(imgFile => {
+        console.log(imgFile.originFileObj)
+        uploadImgToStorage(imgFile.originFileObj)
+      })
+      return;
+    }
+
+    if (form.getFieldValue("text")) {
       addDocumentWithAutoId("messages", {
-        text: form.getFieldValue("text") ?? '' ,
-        pictureURL:form.getFieldValue("picture") && form.getFieldValue("picture").length > 0 ? form.getFieldValue("picture")?.[0]?.thumbUrl : '',
+        text: form.getFieldValue("text") ?? "",
         roomId: selectedRoom.id,
         displayName: user.displayName,
         photoURL: user.photoURL,
         uid: user.uid,
       });
-      setInputValue("");
-      
+      form.resetFields();
+      return;
     }
-    
-    // console.log({
-    //   text: form.getFieldValue("text")?.trim(),
-    //   pictureURL: form.getFieldValue("picture")?.[0]?.thumbUrl,
-    //   roomId: selectedRoom.id,
-    //   displayName: user.displayName,
-    //   photoURL: user.photoURL,
-    //   uid: user.uid,
-    // })
-    // console.log(form.getFieldValue("text"))
-    // console.log(form.getFieldValue("picture").length > 0)
+  };
 
+  const uploadImgToStorage = (imgFile) => {
+    const storageRef = ref(storage, `images/${imgFile.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, imgFile);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+        console.log({ error });
+      },
+      () => {
+        // Handle successful uploads on complete
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("done");
+          addDocumentWithAutoId("messages", {
+            text: form.getFieldValue("text") ?? "",
+            pictureURL: downloadURL,
+            roomId: selectedRoom.id,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+            uid: user.uid,
+          });
+          form.resetFields();
+        });
+      }
+    );
   };
-  const normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
-  };
+
   const onEmojiClick = (event, emojiObject) => {
     form.setFieldsValue({
-        text: form.getFieldValue("text") + emojiObject.emoji
-    })
+      text: form.getFieldValue("text")
+        ? form.getFieldValue("text") + emojiObject.emoji
+        : emojiObject.emoji,
+    });
+    setShowEmojiPicker(false);
   };
-  console.log(form.getFieldValue("picture"))
+
   return (
     <div className="content">
       <Row className="content-header">
@@ -133,25 +167,29 @@ function Content(props) {
         </Col>
       </Row>
       <Row
-        
+        style={{
+          height: `calc(100vh - 110px - ${inputHeight ?? "62"}px - 76px)`,
+        }}
         className="content-message-list"
       >
-        {messageList.map((message, index) => (
+        {[...messageList].reverse().map((message, index) => (
           <Message key={index} message={message} />
         ))}
       </Row>
-      <Row className="content__input" ref={ref}>
+      <Row className="content__input" ref={inputRef}>
         {/* <div className="input-box"> */}
         <Form form={form} className="form-msg">
           <Form.Item
             name="picture"
             className="form-msg__picture"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
+            getValueFromEvent={(e) => {
+              if(Array.isArray(e.fileList) && e.fileList.length > 0) return e.fileList;
+            }}
           >
             <Upload
-              listType="picture"
               beforeUpload={() => false}
+              listType="picture"
+              accept="image/*"
             >
               <PictureFilled className="form-msg__icon " />
             </Upload>
@@ -196,4 +234,4 @@ function Content(props) {
   );
 }
 
-export default Content;
+export default React.memo(Content);
