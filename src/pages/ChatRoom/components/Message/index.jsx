@@ -1,9 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Avatar, Col, Image, Row } from "antd";
+import { Avatar, Col, Image, Row, Spin } from "antd";
 import Text from "antd/lib/typography/Text";
-import "./Message.scss";
 import { formatRelative } from "date-fns/esm";
+import React from "react";
+import "./Message.scss";
 
 Message.propTypes = {};
 
@@ -36,8 +35,12 @@ function Message({ message }) {
           </Text>
         </div>
         <div className="message-item__info">
-        {text.length > 0 && <Text className="message-item__info">{text}</Text>}
-        {pictureURL.length > 0 && <Image width={300} src={pictureURL} />}
+        {
+           text?.length > 0 && (<Text className="message-item__text">{text}</Text>)
+        }
+        
+        {pictureURL && pictureURL?.length > 0 && (<Image width={300} src={pictureURL}/>)  
+        }
         </div>
       </Col>
     </Row>

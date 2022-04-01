@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from './firebase/config'
 import { useEffect } from "react";
+import UserProfile from "./pages/Profile";
 
 function App() {
   useEffect(() => {
@@ -33,6 +34,7 @@ function App() {
       <Routes>
         <Route path="/home" element={<Home />}  />
         <Route path="/chat-room" element={<ChatRoom />}  />
+        <Route path="/profile" element={<UserProfile />}  />
         <Route path="*" element={<Navigate to="/home" />} />
       </Routes>
     </div>

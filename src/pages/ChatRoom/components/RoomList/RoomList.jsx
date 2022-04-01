@@ -1,4 +1,4 @@
-import { Avatar, Menu, Skeleton, Spin, Typography } from "antd";
+import { Avatar, Menu, Skeleton, Typography } from "antd";
 import React, { useContext } from "react";
 import { AppContext } from "../../../../Context/AppProvider";
 import "./RoomList.scss";
@@ -16,8 +16,8 @@ function RoomList(props) {
             <Avatar
               size="large"
               className="mess__img"
-              src={item?.photoURL || "https://cdn.tgdd.vn/Files/2021/12/10/1403714/loimess1_1280x720-800-resize.jpg"}
-            />
+              src={item?.photoURL}
+            >{item?.photoURL ? "" : item?.name?.[0]?.toUpperCase()}</Avatar>
             <Text className="mess__text">{item.description} </Text>
           </Menu.Item>         
         ))

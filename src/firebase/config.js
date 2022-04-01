@@ -3,6 +3,7 @@ import * as firebase from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics';
 import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore'
 import { connectAuthEmulator, getAuth } from 'firebase/auth'
+import { getStorage, connectStorageEmulator } from "firebase/storage";
 
 
 const firebaseConfig = {
@@ -23,8 +24,9 @@ const auth = getAuth()
 connectAuthEmulator(auth, "http://localhost:9099")
 
 const db = getFirestore()
-connectFirestoreEmulator(db,"localhost","5000" )
+connectFirestoreEmulator(db,"localhost",4001 )
 
+const storage= getStorage()
+// connectStorageEmulator(storage, "localhost", 9199);
 
-
-export { auth, db };
+export { auth, db, storage };

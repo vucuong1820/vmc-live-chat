@@ -17,10 +17,14 @@
         display: flex;
         flex-flow: column;
         text-align: justify ;
-        padding: 8px 16px 8px 8px;
+        padding: 8px;
         background-color: #e4e6eb;
         border-radius: 12px;
         margin-top: 8px;
+        width: max-content;
+    }
+    &__text {
+        padding: 6px;
     }
 
     &__time {

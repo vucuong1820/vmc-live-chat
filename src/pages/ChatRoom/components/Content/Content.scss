@@ -20,12 +20,13 @@
 
 .ant-row.content-message-list {
     display: flex;
-    flex-flow: column;
-    justify-content: flex-start;
+    flex-flow: column-reverse;
     padding-top:16px;
-    height: calc(100vh - 110px - 62px - 76px);
-    overflow: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
+}
+.ant-row.content-message-list .fix {
+    flex: 1 1 auto;
 }
 span.content-header__add-members {
     font-size:28px;
