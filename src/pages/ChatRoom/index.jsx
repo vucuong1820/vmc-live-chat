@@ -11,6 +11,10 @@ ChatRoom.propTypes = {};
 function ChatRoom(props) {
   const { user } = useContext(AuthContext)
   const navigate = useNavigate()
+  const style = {
+    borderRight: "solid 1px rgba(229,229,229,1)",
+    height: 'calc(100vh - 110px)'
+  }
   useEffect(() => {
       if(!user){
         navigate("/home")
@@ -24,7 +28,7 @@ function ChatRoom(props) {
           md={6}
           sm={6}
           xs={4}
-          style={{ borderRight: "solid 1px rgba(229,229,229,1)" }}
+          style={style}
         >
           <Sidebar />
         </Col>

@@ -11,6 +11,7 @@ import { db } from "../firebase/config";
 
 function useFirestore(collectionName, condition) {
   const [documents, setDocuments] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   React.useEffect(() => {
 
@@ -37,13 +38,14 @@ function useFirestore(collectionName, condition) {
         id: doc.id
       }));
       setDocuments(newDocuments)
+      setIsLoading(false)
     });
 
     //clean up
     return unsubscribe
     
   }, [collectionName, condition]);
-  return documents;
+  return [documents, isLoading];
 }
 
 export default useFirestore;
