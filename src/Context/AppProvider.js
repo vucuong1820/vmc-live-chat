@@ -26,7 +26,7 @@ function AppProvider({children}) {
     };
   }, [user.uid]);
 
-  const rooms = useFirestore("rooms", roomsCondition);
+  const [rooms] = useFirestore("rooms", roomsCondition);
   const selectedRoom = React.useMemo(() => rooms.find(room => room.id === selectedRoomId) || {}, [rooms, selectedRoomId]);
 
   const membersCondition = React.useMemo(() => {
@@ -36,7 +36,7 @@ function AppProvider({children}) {
       compareValue: selectedRoom.members
     }
   },[selectedRoom.members])
-  const membersInSelectedRoom = useFirestore('users',membersCondition)
+  const [membersInSelectedRoom] = useFirestore('users',membersCondition)
 
   const membersNotInCondition = React.useMemo(() => {
     return {
@@ -45,7 +45,7 @@ function AppProvider({children}) {
       compareValue: selectedRoom.members
     }
   },[selectedRoom.members])
-  const memberNotInSelectedRoom = useFirestore('users',membersNotInCondition)
+  const [memberNotInSelectedRoom] = useFirestore('users',membersNotInCondition)
 
     return (
         <AppContext.Provider value={{memberNotInSelectedRoom, rooms,isShowAddMemberModal,setIsShowAddMemberModal, isShowAddGroupModal, membersInSelectedRoom, setIsShowAddGroupModal, selectedRoomId, setSelectedRoomId, selectedRoom }}>

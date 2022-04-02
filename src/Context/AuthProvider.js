@@ -14,7 +14,8 @@ function AuthProvider({children}) {
     React.useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (user) => {
             if(user) {
-                const { displayName, email, photoURL, uid} = user;
+                console.log({user})
+                const { displayName, email, photoURL, uid } = user;
                 setUser({displayName, email, photoURL, uid})
                 if(location.pathname !== "/profile") navigate("/chat-room")
             }

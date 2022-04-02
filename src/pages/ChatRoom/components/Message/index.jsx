@@ -1,25 +1,16 @@
 import { Avatar, Col, Image, Row, Spin } from "antd";
 import Text from "antd/lib/typography/Text";
-import { formatRelative } from "date-fns/esm";
 import React from "react";
+import { formatDate } from "../../../../utils";
 import "./Message.scss";
 
 Message.propTypes = {};
 
-function Message({ message }) {
+function Message({ message, isLoading }) {
   const { displayName, photoURL, text, createdAt, pictureURL } = message;
-  function formatDate(seconds) {
-    let formattedDate = "";
-
-    if (seconds) {
-      formattedDate = formatRelative(new Date(seconds * 1000), new Date());
-
-      formattedDate =
-        formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
-    }
-
-    return formattedDate;
-  }
+  console.log({message})
+  
+  if(isLoading) return <Spin size="default"/>
   return (
     <Row className="message-item">
       <Col lg={1} md={2} sm={3} xs={3} className="message-item__img">

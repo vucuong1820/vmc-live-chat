@@ -28,6 +28,7 @@ import { storage } from "../../../../firebase/config";
 import { addDocumentWithAutoId } from "../../../../firebase/service";
 import useFirestore from "../../../../hooks/useFirestore";
 import Message from "../Message";
+import Marquee from 'react-fast-marquee';
 import "./Content.scss";
 Content.propTypes = {};
 
@@ -53,14 +54,18 @@ function Content(props) {
     }),
     [selectedRoom.id]
   );
-  const messageList = useFirestore("messages", condition);
+  const [messageList, isLoading] = useFirestore("messages", condition);
 
   if (Object.keys(selectedRoom).length === 0) {
     return (
       <Alert
         style={{ display: "flex", alignItems: "center" }}
         message="Room chat không khả dụng"
-        description="Vui lòng chọn room chat bên trái"
+        description={
+          <Marquee speed={50} pauseOnHover gradient={false}>
+            Room chat không khả dụng, vui lòng chọn một room chat bên trái
+          </Marquee>
+        }
         type="info"
         showIcon
       />
@@ -173,7 +178,7 @@ function Content(props) {
         className="content-message-list"
       >
         {[...messageList].reverse().map((message, index) => (
-          <Message key={index} message={message} />
+          <Message key={index} message={message} isLoading={isLoading} />
         ))}
       </Row>
       <Row className="content__input" ref={inputRef}>
