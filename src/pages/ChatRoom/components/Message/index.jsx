@@ -8,8 +8,6 @@ Message.propTypes = {};
 
 function Message({ message, isLoading }) {
   const { displayName, photoURL, text, createdAt, pictureURL } = message;
-  console.log({message})
-  
   if(isLoading) return <Spin size="default"/>
   return (
     <Row className="message-item">
