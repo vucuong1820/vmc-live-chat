@@ -1,12 +1,23 @@
-.mess__list {
+.group__list {
 
-    li.ant-menu-item.mess__item {
+    li.ant-menu-item.group__item {
+        .ant-menu-title-content {
+            display: flex;
+            align-items: center;
+        }
         margin-bottom: 20px;
         padding: 0 12px;
         height: 41px;
 
-        .mess__img {
+
+        .group__img {
             margin-right: 20px;
+        }
+
+        .group__delete-icon {
+            color: #f35050;
+            margin-left:auto;
+            font-size:18px;
         }
 
     }

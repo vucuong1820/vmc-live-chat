@@ -1,24 +1,35 @@
-import { Avatar, Menu, Skeleton, Typography } from "antd";
-import React, { useContext } from "react";
+import { DeleteOutlined } from "@ant-design/icons";
+import { Avatar, Menu, Modal, Skeleton, Typography } from "antd";
+import React, { useContext, useState } from "react";
+import DeleteRoomModal from "../../../../components/Modal/DeleteRoomModal";
 import { AppContext } from "../../../../Context/AppProvider";
 import "./RoomList.scss";
 
 RoomList.propTypes = {};
 
 function RoomList(props) {
-  const { rooms, setSelectedRoomId } = useContext(AppContext)
+  const { rooms, setSelectedRoomId, setShowDeleteRoomModal } = useContext(AppContext);
+  const [roomDelete, setRoomDelete] = useState("")
+  const handleDeleteRoom = (id) => {
+    console.log('roomlist:',id)
+    setRoomDelete(id)
+    setShowDeleteRoomModal(true)
+
+  }
   const { Text } = Typography;
   return (
-    <Menu style={{ border: "none" }} className="mess__list">
+    <>
+    <Menu style={{ border: "none" }} className="group__list">
       { rooms.length > 0 ? (
         rooms.map((item, index) => (
-          <Menu.Item key={item.id} onClick={() => setSelectedRoomId(item.id)} className="mess__item">
+          <Menu.Item key={item.id} onClick={() => setSelectedRoomId(item.id)} className="group__item">
             <Avatar
               size="large"
-              className="mess__img"
+              className="group__img"
               src={item?.photoURL}
             >{item?.photoURL ? "" : item?.name?.[0]?.toUpperCase()}</Avatar>
-            <Text className="mess__text">{item.description} </Text>
+            <Text className="group__text">{item.name} </Text>
+            <DeleteOutlined onClick={() => handleDeleteRoom(item.id)} className="group__delete-icon" />
           </Menu.Item>         
         ))
       ) : (
@@ -29,6 +40,10 @@ function RoomList(props) {
         ) )
       )}
     </Menu>
+    <DeleteRoomModal roomDelete={roomDelete} />
+    </>
+    
+    
   );
 }
 

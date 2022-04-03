@@ -8,6 +8,7 @@ function AppProvider({children}) {
     const [isShowAddGroupModal, setIsShowAddGroupModal] = useState(false);
     const [isShowAddMemberModal, setIsShowAddMemberModal] = useState(false)
     const [selectedRoomId, setSelectedRoomId] = useState('')
+    const [showDeleteRoomModal , setShowDeleteRoomModal] = useState(false)
     const { user } = useContext(AuthContext);
   /**
    * room
@@ -48,7 +49,7 @@ function AppProvider({children}) {
   const [memberNotInSelectedRoom] = useFirestore('users',membersNotInCondition)
 
     return (
-        <AppContext.Provider value={{memberNotInSelectedRoom, rooms,isShowAddMemberModal,setIsShowAddMemberModal, isShowAddGroupModal, membersInSelectedRoom, setIsShowAddGroupModal, selectedRoomId, setSelectedRoomId, selectedRoom }}>
+        <AppContext.Provider value={{showDeleteRoomModal , setShowDeleteRoomModal,memberNotInSelectedRoom, rooms,isShowAddMemberModal,setIsShowAddMemberModal, isShowAddGroupModal, membersInSelectedRoom, setIsShowAddGroupModal, selectedRoomId, setSelectedRoomId, selectedRoom }}>
             {children}
         </AppContext.Provider>
     );

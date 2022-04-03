@@ -1,10 +1,8 @@
 import {
-  collection,
-  getDocs,
-  onSnapshot,
+  collection, onSnapshot,
   orderBy,
   query,
-  where,
+  where
 } from "firebase/firestore";
 import React, { useState } from "react";
 import { db } from "../firebase/config";
@@ -31,8 +29,8 @@ function useFirestore(collectionName, condition) {
       );  
     }
      
-
     const unsubscribe = onSnapshot(collectionFiltered, (snapshot) => {
+     
       let newDocuments = snapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id
