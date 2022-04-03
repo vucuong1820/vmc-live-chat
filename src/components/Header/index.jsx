@@ -1,18 +1,14 @@
 import {
-  CommentOutlined,
-  FacebookFilled,
-  GoogleCircleFilled,
-  InstagramFilled,
-  LogoutOutlined,
+  CommentOutlined, LogoutOutlined,
   MenuOutlined,
   MessageOutlined,
-  UserOutlined,
+  UserOutlined
 } from "@ant-design/icons";
 import { Button, Col, Drawer, Menu, Row } from "antd";
 import Text from "antd/lib/typography/Text";
-import React, { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
+import React, { useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/config";
 import "./Header.less";
 Header.propTypes = {};

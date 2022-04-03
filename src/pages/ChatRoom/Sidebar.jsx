@@ -1,8 +1,7 @@
+import { Col, Row } from "antd";
 import React from "react";
-import PropTypes from "prop-types";
-import { Col, Row, Space } from "antd";
-import UserInfo from "./components/UserInfo/UserInfo";
 import RoomList from "./components/RoomList/RoomList";
+import UserInfo from "./components/UserInfo/UserInfo";
 
 Sidebar.propTypes = {};
 

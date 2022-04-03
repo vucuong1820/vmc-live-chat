@@ -21,10 +21,10 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 const auth = getAuth()
-connectAuthEmulator(auth, "http://localhost:9099")
+// connectAuthEmulator(auth, "http://localhost:9099")
 
 const db = getFirestore()
-connectFirestoreEmulator(db,"localhost",4001 )
+// connectFirestoreEmulator(db,"localhost",4001 )
 
 const storage= getStorage()
 // connectStorageEmulator(storage, "localhost", 9199);
