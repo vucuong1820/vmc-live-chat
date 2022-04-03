@@ -101,3 +101,13 @@ span.form-msg__icon {
 .ant-form-item.form-msg__emoji {
     position: relative;
 }
+
+.upload-img {
+    .ant-upload.ant-upload-select-picture-card {
+        background: white;
+        height: 100%;
+        width: unset;
+        border: unset;
+        
+    }
+}

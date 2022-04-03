@@ -1,7 +1,7 @@
 import {
   PictureFilled,
   SmileFilled,
-  UsergroupAddOutlined
+  UsergroupAddOutlined,
 } from "@ant-design/icons";
 import {
   Alert,
@@ -12,13 +12,10 @@ import {
   Row,
   Tooltip,
   Typography,
-  Upload
+  Upload,
 } from "antd";
 import Picker from "emoji-picker-react";
-import {
-  getDownloadURL,
-  ref, uploadBytesResumable
-} from "firebase/storage";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useContext, useState } from "react";
 import useResizeObserver from "use-resize-observer";
 import InviteMemberModal from "../../../../components/Modal/InviteMemberModal";
@@ -28,7 +25,7 @@ import { storage } from "../../../../firebase/config";
 import { addDocumentWithAutoId } from "../../../../firebase/service";
 import useFirestore from "../../../../hooks/useFirestore";
 import Message from "../Message";
-import Marquee from 'react-fast-marquee';
+import Marquee from "react-fast-marquee";
 import "./Content.scss";
 Content.propTypes = {};
 
@@ -74,10 +71,10 @@ function Content(props) {
   const handleSubmit = async () => {
     const imgFileList = form.getFieldValue("picture");
     if (Array.isArray(imgFileList) && imgFileList.length > 0) {
-      imgFileList.forEach(imgFile => {
-        console.log(imgFile.originFileObj)
-        uploadImgToStorage(imgFile.originFileObj)
-      })
+      imgFileList.forEach((imgFile) => {
+        console.log(imgFile.originFileObj);
+        uploadImgToStorage(imgFile.originFileObj);
+      });
       return;
     }
 
@@ -188,13 +185,15 @@ function Content(props) {
             name="picture"
             className="form-msg__picture"
             getValueFromEvent={(e) => {
-              if(Array.isArray(e.fileList) && e.fileList.length > 0) return e.fileList;
+              if (Array.isArray(e.fileList) && e.fileList.length > 0)
+                return e.fileList;
             }}
           >
             <Upload
               beforeUpload={() => false}
-              listType="picture"
+              listType="picture-card"
               accept="image/*"
+              className="upload-img"
             >
               <PictureFilled className="form-msg__icon " />
             </Upload>
