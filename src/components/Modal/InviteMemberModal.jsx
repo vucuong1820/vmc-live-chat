@@ -17,7 +17,6 @@ function AddNewRoomModal(props) {
   const [form] = Form.useForm();
   const [value, setValue] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  console.log({memberNotInSelectedRoom})
   const userList = [...memberNotInSelectedRoom]
   const handleOk = async () => {
     try {

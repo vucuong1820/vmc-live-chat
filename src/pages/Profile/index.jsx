@@ -4,11 +4,12 @@ import "./UserProfile.less";
 import { Divider, Image, Row, Descriptions, Typography } from "antd";
 import {ManOutlined} from "@ant-design/icons";
 import { AuthContext } from "../../Context/AuthProvider";
+import { auth } from "../../firebase/config"
 UserProfile.propTypes = {};
 
 function UserProfile(props) {
 const { user } = useContext(AuthContext)
-const { displayName, email, uid, photoURL} = user
+const { displayName, email, uid} = user
   const labelStyle = {
      backgroundColor: '#ccc',
      fontWeight: 'bold'
@@ -26,9 +27,11 @@ const { displayName, email, uid, photoURL} = user
           <Image
             className="user-img"
             width={200}
-            src={photoURL}
+            src={user?.photoURL || "https://via.placeholder.com/200?text=Image+is+not+available"}
             alt={displayName}
-          />
+          >
+            {user?.photoURL ? '' : user?.displayName?.[0]?.toUpperCase()}
+          </Image>
           <Typography.Title className="user-title" level={3}>
             Vũ Mạnh Cường
             <ManOutlined style={{marginLeft: '8px'}} />
