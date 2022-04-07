@@ -52,7 +52,7 @@ function Content(props) {
     [selectedRoom.id]
   );
   const [messageList, isLoading] = useFirestore("messages", condition);
-
+  console.log({membersInSelectedRoom})
   if (Object.keys(selectedRoom).length === 0) {
     return (
       <Alert

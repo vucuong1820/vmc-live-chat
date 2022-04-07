@@ -11,11 +11,11 @@ function RoomList(props) {
   const { rooms, setSelectedRoomId, setShowDeleteRoomModal } = useContext(AppContext);
   const [roomDelete, setRoomDelete] = useState("")
   const handleDeleteRoom = (id) => {
-    console.log('roomlist:',id)
     setRoomDelete(id)
     setShowDeleteRoomModal(true)
 
   }
+  console.log({rooms})
   const { Text } = Typography;
   return (
     <>

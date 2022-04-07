@@ -10,6 +10,7 @@ function AddNewRoomModal(props) {
   const { isShowAddGroupModal, setIsShowAddGroupModal } = useContext(AppContext);
   const [form] = Form.useForm();
   const { user } = useContext(AuthContext);
+  console.log(user)
   const handleOk = async () => {
     try {
       const values = await form.validateFields();

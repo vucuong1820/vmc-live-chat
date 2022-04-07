@@ -12,19 +12,20 @@ function AuthProvider({children}) {
     const location = useLocation();
 
     React.useEffect(() => {
-        const unSubscribe = onAuthStateChanged(auth, (user) => {
-            if(user) {
-                const { displayName, email, photoURL, uid } = user;
-                setUser({displayName, email, photoURL, uid})
-                if(location.pathname !== "/profile") navigate("/chat-room")
+        const unSubscribe = onAuthStateChanged(auth,  (userInfo) => {
+            if(userInfo) {
+                const { displayName, email, photoURL, uid } = userInfo;
+                setUser({ displayName, email, photoURL, uid })               
+                return;
             }
-
+            // reset user info
+            setUser({})
         })
-        
-        return () => unSubscribe()
-        
-    },[navigate, location.pathname])
-
+       
+        return () => {
+            unSubscribe()
+        }        
+    },[navigate, location.pathname, ])
     return (
         <AuthContext.Provider value={{user}}>
             {children}
@@ -32,4 +33,4 @@ function AuthProvider({children}) {
     );
 }
 
-export default AuthProvider;
+export default React.memo(AuthProvider);
