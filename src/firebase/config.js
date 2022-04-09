@@ -7,12 +7,12 @@ import { getStorage, connectStorageEmulator } from "firebase/storage";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB0tPqYd6QlD-qlBgZVvUddY8jtqBuhepg",
-  authDomain: "vmc-live-chat.firebaseapp.com",
-  projectId: "vmc-live-chat",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
   storageBucket: "vmc-live-chat.appspot.com",
   messagingSenderId: "128301635748",
-  appId: "1:128301635748:web:17db17f6c58ae46f3b6e31",
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
   measurementId: "G-3JZL70L2ZD"
 };
 
