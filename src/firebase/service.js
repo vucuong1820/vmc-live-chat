@@ -18,7 +18,6 @@ export const addDocumentWithAutoId = (collectionName, data) => {
 export const getUserList = async (membersInSelectedRoom) => {
     const q = query(collection(db, "users"),orderBy("displayName"), limit(20));
     const membersIdInSelectedRoom = membersInSelectedRoom.map(mem => mem.uid)
-    console.log({membersIdInSelectedRoom, membersInSelectedRoom})
 
     const querySnapshot = await getDocs(q);
     const documentList = []

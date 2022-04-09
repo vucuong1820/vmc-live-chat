@@ -33,7 +33,7 @@ const { displayName, email, uid} = user
             {user?.photoURL ? '' : user?.displayName?.[0]?.toUpperCase()}
           </Image>
           <Typography.Title className="user-title" level={3}>
-            Vũ Mạnh Cường
+            {displayName}
             <ManOutlined style={{marginLeft: '8px'}} />
           </Typography.Title>
 

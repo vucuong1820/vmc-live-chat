@@ -74,7 +74,7 @@ function Header(props) {
           </Col>
 
           <Col lg={24} md={24} sm={20} xs={20} className="logo-group">
-            <Link to="/home" className="logo">
+            <Link to="/chat-room" className="logo">
               <MessageOutlined className="logo__icon" />
               <Text className="logo__title">Realtime Chat App</Text>
             </Link>

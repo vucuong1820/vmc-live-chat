@@ -46,7 +46,6 @@ function AppProvider({children}) {
     }
   },[selectedRoom.members])
   const [memberNotInSelectedRoom] = useFirestore('users',membersNotInCondition)
-  console.log({rooms, selectedRoomId,selectedRoom,membersInSelectedRoom})
 
 
     return (

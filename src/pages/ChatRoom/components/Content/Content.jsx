@@ -16,7 +16,7 @@ import {
 } from "antd";
 import Picker from "emoji-picker-react";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import useResizeObserver from "use-resize-observer";
 import InviteMemberModal from "../../../../components/Modal/InviteMemberModal";
 import { AppContext } from "../../../../Context/AppProvider";
@@ -31,6 +31,7 @@ Content.propTypes = {};
 
 function Content(props) {
   const [inputHeight, setInputHeight] = useState(0);
+  const inputTextRef = React.useRef(null)
   const [form] = Form.useForm();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const { ref: inputRef } = useResizeObserver({
@@ -52,7 +53,6 @@ function Content(props) {
     [selectedRoom.id]
   );
   const [messageList, isLoading] = useFirestore("messages", condition);
-  console.log({membersInSelectedRoom})
   if (Object.keys(selectedRoom).length === 0) {
     return (
       <Alert
@@ -72,7 +72,6 @@ function Content(props) {
     const imgFileList = form.getFieldValue("picture");
     if (Array.isArray(imgFileList) && imgFileList.length > 0) {
       imgFileList.forEach((imgFile) => {
-        console.log(imgFile.originFileObj);
         uploadImgToStorage(imgFile.originFileObj);
       });
       return;
@@ -132,7 +131,7 @@ function Content(props) {
         ? form.getFieldValue("text") + emojiObject.emoji
         : emojiObject.emoji,
     });
-    setShowEmojiPicker(false);
+    setShowEmojiPicker(true);
   };
 
   return (
@@ -217,16 +216,23 @@ function Content(props) {
 
           <Form.Item name="text" className="form-msg__input">
             <Input
+              ref={inputTextRef}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              onPressEnter={handleSubmit}
+              onPressEnter={async () => {
+                await handleSubmit();
+                inputTextRef.current.focus();
+              }}
               className="input-text"
             />
           </Form.Item>
 
           <Form.Item>
             <span
-              onClick={handleSubmit}
+              onClick={async () => {
+                await handleSubmit();
+                inputTextRef.current.focus();
+              }}
               className="form-msg__send form-msg__icon"
             >
               <i className="fi fi-ss-paper-plane"></i>

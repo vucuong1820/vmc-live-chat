@@ -13,7 +13,6 @@ function DeleteRoomModal({ roomDelete }) {
   const [isLoading, setIsLoading] = useState(false);
   const handleOk = async () => {
     setIsLoading(true);
-    console.log({ roomDelete });
 
     await deleteDoc(doc(db, "rooms", roomDelete));
     setShowDeleteRoomModal(false);

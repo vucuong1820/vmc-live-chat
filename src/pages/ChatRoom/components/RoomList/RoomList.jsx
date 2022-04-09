@@ -15,7 +15,6 @@ function RoomList(props) {
     setShowDeleteRoomModal(true)
 
   }
-  console.log({rooms})
   const { Text } = Typography;
   return (
     <>
