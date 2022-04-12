@@ -4,7 +4,7 @@ import {
   MessageOutlined,
   UserOutlined
 } from "@ant-design/icons";
-import { Button, Col, Drawer, Menu, Row } from "antd";
+import { Avatar, Button, Col, Drawer, Image, Menu, Row } from "antd";
 import Text from "antd/lib/typography/Text";
 import { signOut } from "firebase/auth";
 import React, { useState } from "react";
@@ -60,7 +60,7 @@ function Header(props) {
                   key="2"
                   icon={<CommentOutlined style={{ fontSize: "20px" }} />}
                 >
-                  <NavLink to="/chat-room">Chat Room</NavLink>
+                  <NavLink to="/chat-room" >Chat Room</NavLink>
                 </Menu.Item>
                 <Menu.Item
                   onClick={handleSignOut}
@@ -75,7 +75,7 @@ function Header(props) {
 
           <Col lg={24} md={24} sm={20} xs={20} className="logo-group">
             <Link to="/chat-room" className="logo">
-              <MessageOutlined className="logo__icon" />
+              <Avatar className="logo__icon" src="https://lh3.googleusercontent.com/a-/AOh14GgL-DBxHkhg9-xOQID0ctCdpyg07nNycC0r3T-6-g=s96-c" size="large" alt="icon"/>
               <Text className="logo__title">Realtime Chat App</Text>
             </Link>
           </Col>
