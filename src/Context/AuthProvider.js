@@ -14,8 +14,9 @@ function AuthProvider({children}) {
     React.useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth,  (userInfo) => {
             if(userInfo) {
+                const { providerId } = userInfo?.providerData[0]
                 const { displayName, email, photoURL, uid } = userInfo;
-                setUser({ displayName, email, photoURL, uid })               
+                setUser({ displayName, email, photoURL, uid, providerId })               
                 return;
             }
             // reset user info

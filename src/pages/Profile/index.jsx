@@ -9,7 +9,8 @@ UserProfile.propTypes = {};
 
 function UserProfile(props) {
 const { user } = useContext(AuthContext)
-const { displayName, email, uid} = user
+console.log({user})
+const { displayName, email, uid, providerId} = user
   const labelStyle = {
      backgroundColor: '#ccc',
      fontWeight: 'bold'
@@ -40,7 +41,14 @@ const { displayName, email, uid} = user
         <Descriptions bordered >
           <Descriptions.Item labelStyle={labelStyle} contentStyle={contentStyle} span={3} label="Tên tài khoản">{displayName}</Descriptions.Item>
           <Descriptions.Item labelStyle={labelStyle} contentStyle={contentStyle} span={3} label="Địa chỉ email">{email}</Descriptions.Item>
-          <Descriptions.Item labelStyle={labelStyle} contentStyle={contentStyle} span={3} label="Loại tài khoản">Google</Descriptions.Item>
+          <Descriptions.Item labelStyle={labelStyle} contentStyle={contentStyle} span={3} label="Loại tài khoản">
+            {
+              providerId === 'google.com' && 'Liên kết Google'
+            }
+            {
+              providerId === 'password' && 'Đăng ký bằng email, mật khẩu'
+            }
+          </Descriptions.Item>
           <Descriptions.Item labelStyle={labelStyle} contentStyle={contentStyle} span={3} label="UID">{uid}</Descriptions.Item>
         </Descriptions>
 
